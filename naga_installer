@@ -245,3 +245,7 @@ sudo chown freeswitch:freeswitch /var/run/php-fpm/www.sock
 #check the path in app.lua load method
 # if any database error load pgswl module
 #
+######################################Install FFMPEG
+sudo sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/pgdg*.repo
+sudo dnf install --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-9.noarch.rpm
+sudo dnf install ffmpeg ffmpeg-devel
