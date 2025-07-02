@@ -250,6 +250,11 @@ sudo sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/pgdg*.repo
 sudo dnf install --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-9.noarch.rpm
 sudo dnf install ffmpeg ffmpeg-devel
 
+######################## SO file permission changes#################################
+sudo chown freeswitch:daemon /usr/local/freeswitch/mod/mod_audio_stream.so
+ 
+# Change permissions to 755 (rwxr-xr-x)
+sudo chmod 755 /usr/local/freeswitch/mod/mod_audio_stream.so
 
 
 
