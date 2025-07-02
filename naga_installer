@@ -249,3 +249,13 @@ sudo chown freeswitch:freeswitch /var/run/php-fpm/www.sock
 sudo sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/pgdg*.repo
 sudo dnf install --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-9.noarch.rpm
 sudo dnf install ffmpeg ffmpeg-devel
+
+
+
+
+
+
+
+#install mysql client
+ 
+dnf install mysql-community-client --disablerepo=pgdg14 --disablerepo=pgdg-common --nogpgcheck
