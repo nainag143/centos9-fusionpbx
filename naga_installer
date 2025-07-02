@@ -1,0 +1,247 @@
+sudo yum install chrony
+sudo systemctl enable --now chronyd
+sudo chronyc tracking
+.resources/selinux.sh
+
+
+sudo dnf groupinstall "Development Tools"
+sudo dnf install libtiff-devel
+
+wget https://download.osgeo.org/libtiff/tiff-4.4.0.tar.gz
+tar -xvzf tiff-4.4.0.tar.gz
+cd tiff-4.4.0
+
+./configure
+make
+sudo make install
+
+./resources/fusionpbx.sh
+
+#database install 
+ sudo dnf install -y --nogpgcheck https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+    sudo dnf clean all
+    sudo dnf install lz4
+    sudo rpm -ivh postgresql14-*.rpm
+    sudo dnf install -y postgresql14-server
+
+./resources/postgresql.sh 
+
+./resources/sslcert.sh
+
+#nginxinstall
+dnf repolist
+     sudo dnf config-manager --set-disabled pgdg12
+     sudo dnf config-manager --set-disabled pgdg13
+     sudo dnf config-manager --set-disabled pgdg15
+     sudo dnf clean all
+     sudo dnf install nginx
+
+   ./resources/nginx.sh
+
+
+#php 
+
+
+   sudo dnf install -y epel-release
+    sudo dnf install -y https://rpms.remirepo.net/enterprise/remi-release-9.rpm
+    sudo dnf module reset php
+    
+   # sudo dnf module enable php:remi-8.3 -y
+    sudo dnf clean all
+     sudo dnf module enable php:remi-7.4 -y
+     sudo dnf clean all
+    sudo dnf install -y php-fpm php-gd php-pgsql php-odbc php-curl php-imap php-opcache php-pdo php-soap php-xml php-xmlrpc php-cli
+    php -v
+    ./resources/php.sh 
+    ./resources/firewalld.sh
+
+
+sudo dnf groupinstall -y "Development Tools"
+     sudo dnf install -y   git   python3   python3-devel   autoconf   automake   cmake   libtool   ncurses-compat-libs   ncurses-devel   make   libjpeg-turbo-devel   pkgconf-pkg-config   zlib-devel   sqlite   sqlite-devel   pcre-devel   speexdsp-devel   libedit-devel   ldns-devel   lua-devel   libcurl-devel   apr-devel   yasm   sndfile-devel   opus-devel   libtiff-devel   ffmpeg-devel   postgresql-devel
+     sudo dnf install -y epel-release
+sudo dnf config-manager --set-enabled crb
+sudo dnf makecache
+sudo dnf install -y \
+  speexdsp-devel \
+  ldns-devel \
+  lua-devel \
+  sndfile-devel \
+  opus-devel \
+  ffmpeg-devel
+  sudo dnf install -y https://download1.rpmfusion.org/free/el/rpmfusion-free-release-9.noarch.rpm
+
+sudo dnf install -y https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-9.noarch.rpm
+
+ 
+sudo dnf clean all
+
+sudo dnf makecache
+ 
+sudo dnf install -y libsndfile-devel compat-ffmpeg4-devel
+
+
+cd /root/
+
+sudo dnf install -y cmake
+
+sudo dnf install -y libuuid-devel
+
+export PKG_CONFIG_PATH=/usr/share/freeswitch/lib/pkgconfig:$PKG_CONFIG_PATH
+cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/share/freeswitch
+ls /usr/share/freeswitch/lib/pkgconfig/libks2.pc
+cd /root/build-master/libks
+make clean
+rm -rf CMakeCache.txt CMakeFiles
+cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/share/freeswitch
+make
+sudo make install
+ls /usr/share/freeswitch/lib/pkgconfig/libks2.pc
+sudo mkdir -p /usr/share/freeswitch/lib/pkgconfig
+sudo tee /usr/share/freeswitch/lib/pkgconfig/libks2.pc > /dev/null 
+export PKG_CONFIG_PATH=/usr/share/freeswitch/lib/pkgconfig:$PKG_CONFIG_PATH
+cd /root/build-master/signalwire-c
+cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/share/freeswitch
+ls /usr/share/freeswitch/include/libks/cmake/
+ls /root/build-master/libks/cmake/
+sudo mkdir -p /usr/share/freeswitch/include/libks/cmake
+sudo cp /root/build-master/libks/cmake/* /usr/share/freeswitch/include/libks/cmake/
+cd /root/
+
+find /usr/share/freeswitch -name libks2.pc
+export PKG_CONFIG_PATH=/usr/share/freeswitch/lib64/pkgconfig:$PKG_CONFIG_PATH
+
+env PKG_CONFIG_PATH=/usr/share/freeswitch/lib64/pkgconfig cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/share/freeswitch
+export PKG_CONFIG_PATH=/usr/share/freeswitch/lib64/pkgconfig:$PKG_CONFIG_PATH
+cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/share/freeswitch
+cd /root/build-master/signalwire-c
+export PKG_CONFIG_PATH=/usr/share/freeswitch/lib64/pkgconfig:$PKG_CONFIG_PATH
+cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/share/freeswitch
+cd /root/
+
+export PKG_CONFIG_PATH=/usr/share/freeswitch/lib64/pkgconfig:$PKG_CONFIG_PATH
+cd /root/build-master/signalwire-c
+env PKG_CONFIG_PATH=/usr/share/freeswitch/lib64/pkgconfig:$PKG_CONFIG_PATH cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/share/freeswitch
+cd /root/
+ 
+
+sudo dnf install libjpeg-turbo-devel
+
+sudo dnf install sqlite-devel
+
+sudo dnf install libcurl-devel
+
+sudo dnf install pcre-devel
+
+sudo dnf install speex-devel speexdsp-devel
+
+sudo dnf install ldns-devel
+
+cd /root/build-master/libks
+sudo rm -rf CMakeFiles CMakeCache.txt
+cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+make -j$(nproc)
+sudo make install
+export PKG_CONFIG_PATH=/usr/lib64/pkgconfig:$PKG_CONFIG_PATH
+
+	cd /usr/src
+	git clone https://github.com/freeswitch/spandsp.git spandsp
+	cd spandsp
+ 	git reset --hard 0d2e6ac65e0e8f53d652665a743015a88bf048d4
+ 	#/usr/bin/sed -i 's/AC_PREREQ(\[2\.71\])/AC_PREREQ([2.69])/g' /usr/src/spandsp/configure.ac
+	sh autogen.sh
+	./configure --enable-debug
+	make -j $(getconf _NPROCESSORS_ONLN)
+	make install
+	ldconfig
+
+  export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+
+  	cd /usr/src
+	#git clone https://github.com/freeswitch/sofia-sip.git sofia-sip
+	wget https://github.com/freeswitch/sofia-sip/archive/refs/tags/v1.13.17.zip
+	unzip v1.13.17.zip
+	cd sofia-sip-1.13.17
+	sh autogen.sh
+	./configure --enable-debug
+	make -j $(getconf _NPROCESSORS_ONLN)
+	make install
+  export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+sudo dnf groupinstall "Development Tools"
+sudo dnf install ncurses-devel
+
+cd /usr/src
+sudo curl -LO https://www.thrysoee.dk/editline/libedit-20221030-3.1.tar.gz
+sudo tar -xzf libedit-20221030-3.1.tar.gz
+cd libedit-20221030-3.1
+./configure
+make -j$(nproc)
+sudo make install
+sudo ldconfig
+
+
+cd /root/build-master/freeswitch
+
+
+sudo dnf install nasm
+sudo dnf install yasm
+
+
+
+ sudo find /usr -name tiff.pc
+  sudo nano /usr/lib64/pkgconfig/tiff.pc
+#   prefix=/usr
+# exec_prefix=${prefix}
+# libdir=${exec_prefix}/lib64
+# includedir=${prefix}/include
+
+# Name: TIFF
+# Description: TIFF library
+# Version: 4.4.0
+# Libs: -L${libdir} -ltiff
+# Cflags: -I${includedir}
+
+ export PKG_CONFIG_PATH=/usr/lib64/pkgconfig:$PKG_CONFIG_PATH
+  pkg-config --libs tiff
+ldconfig -v | grep /usr/local/lib
+     echo "/usr/local/lib" | sudo tee /etc/ld.so.conf.d/usr_local_lib.conf
+     sudo ldconfig
+     ldconfig -v | grep /usr/local/lib
+sudo dnf install lua-devel
+sudo dnf install libmemcached-devel
+sudo dnf install postgresql-devel
+export CFLAGS="-I/usr/pgsql-14/include $CFLAGS"
+export LDFLAGS="-L/usr/pgsql-14/lib $LDFLAGS"
+
+sudo dnf install ldns-devel
+ 
+sudo dnf install speex-devel speexdsp-devel
+ 
+sudo dnf install pcre-devel
+ 
+sudo dnf install libcurl-devel
+ 
+sudo dnf install sqlite-devel
+ 
+sudo dnf install libjpeg-turbo-devel
+ 
+sudo dnf install -y libuuid-devel
+ 
+sudo dnf install -y cmake
+ 
+
+cd /root/build-master/freeswitch
+make clean
+LDFLAGS="-L/usr/lib64 -ltiff" ./configure
+make -j$(nproc)
+sudo make install
+
+#edit ngix/fusionpbx.conf for www.sock
+
+sudo chown freeswitch:freeswitch /var/run/php-fpm/www.sock
+   sudo chmod 660 /var/run/php-fpm/www.sock
+
+#configure , build and install
+#copy the script files from www/fusionpbx  and give  permission
+#check the path in app.lua load method
+# if any database error load pgswl module
+#
