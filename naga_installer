@@ -235,6 +235,19 @@ LDFLAGS="-L/usr/lib64 -ltiff" ./configure
 make -j$(nproc)
 sudo make install
 
+
+
+make clean
+CPPFLAGS="-I/usr/pgsql-14/include" LDFLAGS="-L/usr/pgsql-14/lib -L/usr/lib64 -ltiff" ./configure
+make -j$(nproc)
+sudo make install
+sudo dnf install -y libshout-devel libogg-devel libvorbis-devel
+make clean
+CPPFLAGS="-I/usr/pgsql-14/include" LDFLAGS="-L/usr/pgsql-14/lib -L/usr/lib64 -ltiff" ./configure
+make -j$(nproc)
+sudo make install
+
+
 #edit ngix/fusionpbx.conf for www.sock
 
 sudo chown freeswitch:freeswitch /var/run/php-fpm/www.sock
