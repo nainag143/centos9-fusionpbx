@@ -247,7 +247,29 @@ CPPFLAGS="-I/usr/pgsql-14/include" LDFLAGS="-L/usr/pgsql-14/lib -L/usr/lib64 -lt
 make -j$(nproc)
 sudo make install
 
+sudo chown freeswitch:freeswitch /var/run/php-fpm/www.sock
+sudo chmod 660 /var/run/php-fpm/www.sock
 
+
+
+chown -R freeswitch:daemon /etc/freeswitch
+
+chown -R freeswitch:daemon /var/lib/freeswitch
+
+chown -R freeswitch:daemon /usr/share/freeswitch
+
+chown -R freeswitch:daemon /var/log/freeswitch
+
+chown -R freeswitch:daemon /var/run/freeswitch
+ 
+find /var/www/fusionpbx -type d -exec chmod 770 {} \;
+
+find /var/www/fusionpbx -type f -exec chmod 664 {} \;
+
+
+
+
+ 
 #edit ngix/fusionpbx.conf for www.sock
 
 sudo chown freeswitch:freeswitch /var/run/php-fpm/www.sock
